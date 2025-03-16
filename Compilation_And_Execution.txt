@@ -1,0 +1,24 @@
+Step 1: Upload Data to HDFS
+
+hdfs dfs -mkdir -p /input
+hdfs dfs -put relation_R.txt /input/
+hdfs dfs -put relation_S.txt /input/
+
+
+
+Step 2: Compile Java Files
+
+javac -cp hadoop classpath -d . SemiJoinMapper.java SemiJoinReducer.java SemiJoinDriver.java
+jar cf SemiJoin.jar *.class
+
+
+
+Step 3: Run MapReduce Job
+
+hadoop jar SemiJoin.jar SemiJoinDriver /input/relation_S.txt /input/relation_R.txt /output/
+
+
+
+Step 4: View Output
+
+hdfs dfs -cat /output/part-*
